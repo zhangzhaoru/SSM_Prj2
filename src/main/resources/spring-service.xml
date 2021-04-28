@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://www.springframework.org/schema/context
+   http://www.springframework.org/schema/context/spring-context.xsd">
+    <!--    使用Spring整合service层-->
+    <!--    扫描Service层的相关bean-->
+    <context:component-scan base-package="com.zhangzhaoru.service"/>
+
+    <!--    将BookServiceImpl注入到Ioc容器中-->
+<!--    需要在总的配置文件中将各层的xml导入，否则爆红-->
+<!--    使用配置文件的方式关联Dao层-->
+    <bean id="BookServiceImpl" class="com.zhangzhaoru.service.BookServiceImpl">
+        <property name="bookMapper" ref="bookMapper"/>
+    </bean>
+    <!--    配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!-- 注入数据库连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>
